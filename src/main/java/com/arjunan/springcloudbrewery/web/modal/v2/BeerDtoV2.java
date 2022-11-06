@@ -19,7 +19,7 @@ public class BeerDtoV2 {
     @Null
     private UUID id;
 
-    @NotBlank
+    @NotBlank(message = "beerName should not be blank")
     private String beerName;
 
     private BeerStyleEnum beerStyle;

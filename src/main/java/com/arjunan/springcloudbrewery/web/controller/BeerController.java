@@ -27,7 +27,7 @@ public class BeerController {
     }
 
     @PostMapping
-    public  ResponseEntity handlePost(@RequestBody BeerDto beerDto){
+    public  ResponseEntity<?> handlePost(@RequestBody BeerDto beerDto){
 
         BeerDto savedBeerDto = beerService.saveNewBeer(beerDto);
 
@@ -35,15 +35,15 @@ public class BeerController {
         //TODO add hostname in url
         httpHeaders.add("Location" , "/api/v1/beer" + savedBeerDto.getId().toString());
 
-        return new ResponseEntity(httpHeaders , HttpStatus.CREATED);
+        return new ResponseEntity<>(httpHeaders , HttpStatus.CREATED);
     }
 
     @PutMapping("/{beerId}")
-    public ResponseEntity handlePut(@PathVariable(name = "beerId") UUID id, @RequestBody BeerDto beerDto){
+    public ResponseEntity<?> handlePut(@PathVariable(name = "beerId") UUID id, @RequestBody BeerDto beerDto){
 
         beerService.updateBeer(id,beerDto);
 
-        return  new ResponseEntity(HttpStatus.NO_CONTENT);
+        return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/delete/{beerId}")
