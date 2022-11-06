@@ -61,24 +61,4 @@ public class BeerControllerV2 {
         beerService.deleteBeer(id);
     }
 
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<List<?>> validationErrorHandler(ConstraintViolationException constraintViolationException){
-        List<String> errors = new ArrayList<>(constraintViolationException.getConstraintViolations().size());
-
-        constraintViolationException.getConstraintViolations().forEach(constraintViolation -> {
-            errors.add(constraintViolation.getPropertyPath() + " : " + constraintViolation.getMessage());
-        });
-
-        return  new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<List<?>> MethodArugmentValidationErrorHandler(MethodArgumentNotValidException methodArgumentNotValidException){
-        List<String> errors = new ArrayList<>(methodArgumentNotValidException.getErrorCount());
-
-        methodArgumentNotValidException.getAllErrors().forEach(objectError -> {
-            errors.add(objectError.getDefaultMessage());
-        });
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-    }
 }

@@ -57,26 +57,4 @@ public class CustomerController {
     }
 
 
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ResponseEntity<List<?>> validationErrorHandler(ConstraintViolationException constraintViolationException){
-        List<String> errors = new ArrayList<>(constraintViolationException.getConstraintViolations().size());
-
-        constraintViolationException.getConstraintViolations().forEach(constraintViolation -> {
-            errors.add(constraintViolation.getPropertyPath() + " : " + constraintViolation.getMessage());
-        });
-
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-    }
-
-    @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<List<?>> methodArgumentErrorHandler(MethodArgumentNotValidException methodArgumentNotValidException){
-        List<String> errors = new ArrayList<>(methodArgumentNotValidException.getAllErrors().size());
-
-        methodArgumentNotValidException.getAllErrors().forEach(objectError -> {
-            errors.add(objectError.getDefaultMessage());
-        });
-
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-    }
-
 }
