@@ -3,6 +3,8 @@ package com.arjunan.springcloudbrewery.web.controller.v2;
 import com.arjunan.springcloudbrewery.services.v2.BeerServiceV2;
 import com.arjunan.springcloudbrewery.web.controller.BeerController;
 import com.arjunan.springcloudbrewery.web.modal.BeerDto;
+import com.arjunan.springcloudbrewery.web.modal.v2.BeerDtoV2;
+import com.arjunan.springcloudbrewery.web.modal.v2.BeerStyleEnum;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.CoreMatchers;
@@ -40,13 +42,13 @@ class BeerControllerV2Test {
     @Autowired
     ObjectMapper objectMapper;
 
-    static BeerDto beerDto;
+    static BeerDtoV2 beerDto;
 
     @BeforeAll
     public static void setUp(){
-        beerDto = BeerDto.builder()
+        beerDto = BeerDtoV2.builder()
                 .beerName("beer1")
-                .beerStyle("PALE_ALE")
+                .beerStyle(BeerStyleEnum.ALE)
                 .upc(1224355L)
                 .build();
     }
@@ -68,14 +70,14 @@ class BeerControllerV2Test {
     @Test
     void handlePost() throws Exception {
 
-        BeerDto beerDto1 = beerDto;
+        BeerDtoV2 beerDto1 = beerDto;
 
         beerDto1.setId(null);
 
-        BeerDto saveBeer = BeerDto.builder()
+        BeerDtoV2 saveBeer = BeerDtoV2.builder()
                 .id(UUID.randomUUID())
                 .beerName("New Beer")
-                .beerStyle("Style")
+                .beerStyle(BeerStyleEnum.ALE)
                 .build();
 
         String beerString = objectMapper.writeValueAsString(beerDto1);
@@ -94,11 +96,11 @@ class BeerControllerV2Test {
     @Test
     void handlePut() throws Exception {
 
-        BeerDto beerDto1 = beerDto;
+        BeerDtoV2 beerDto1 = beerDto;
 
         beerDto1.setId(null);
 
-        String beerDtoJson = objectMapper.writeValueAsString(beerDto);
+        String beerDtoJson = objectMapper.writeValueAsString(beerDto1);
 
         //when
         mockMvc.perform(put("/api/v2/beer/" + UUID.randomUUID())

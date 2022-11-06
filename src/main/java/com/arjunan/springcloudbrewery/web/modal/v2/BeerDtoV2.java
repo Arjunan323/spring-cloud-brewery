@@ -22,7 +22,6 @@ public class BeerDtoV2 {
     @NotBlank
     private String beerName;
 
-    @NotBlank
     private BeerStyleEnum beerStyle;
 
     @Positive

@@ -3,6 +3,7 @@ package com.arjunan.springcloudbrewery.web.controller.v2;
 import com.arjunan.springcloudbrewery.services.BeerService;
 import com.arjunan.springcloudbrewery.services.v2.BeerServiceV2;
 import com.arjunan.springcloudbrewery.web.modal.BeerDto;
+import com.arjunan.springcloudbrewery.web.modal.v2.BeerDtoV2;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,14 +24,14 @@ public class BeerControllerV2 {
 
 
     @GetMapping("/{beerId}")
-    public ResponseEntity<BeerDto> getBeer(@PathVariable(name = "beerId") UUID beerId){
+    public ResponseEntity<BeerDtoV2> getBeer(@PathVariable(name = "beerId") UUID beerId){
         return new ResponseEntity<>(beerService.getBeerById(beerId), HttpStatus.OK);
     }
 
     @PostMapping
-    public  ResponseEntity handlePost(@Valid @RequestBody BeerDto beerDto){
+    public  ResponseEntity handlePost(@Valid @RequestBody BeerDtoV2 beerDto){
 
-        BeerDto savedBeerDto = beerService.saveNewBeer(beerDto);
+        BeerDtoV2 savedBeerDto = beerService.saveNewBeer(beerDto);
 
         HttpHeaders httpHeaders = new HttpHeaders();
         //TODO add hostname in url
@@ -40,7 +41,7 @@ public class BeerControllerV2 {
     }
 
     @PutMapping("/{beerId}")
-    public ResponseEntity handlePut(@PathVariable(name = "beerId") UUID id, @Valid @RequestBody BeerDto beerDto){
+    public ResponseEntity handlePut(@PathVariable(name = "beerId") UUID id, @Valid @RequestBody BeerDtoV2 beerDto){
 
         beerService.updateBeer(id,beerDto);
 
